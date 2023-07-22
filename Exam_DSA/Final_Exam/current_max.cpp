@@ -1,6 +1,4 @@
-#include <iostream>
-#include <string>
-#include <queue>
+#include<bits/stdc++.h>
 using namespace std;
 
 struct Student
@@ -9,77 +7,75 @@ struct Student
     int roll;
     int marks;
 
-    // Custom comparison operator for the max heap
-    bool operator<(const Student& other) const
+    bool operator<(const Student& next_student) const
     {
-        if (marks != other.marks)
+        if (marks != next_student.marks)
         {
-            return marks < other.marks;
+            return marks < next_student.marks;
         }
-        else
-        {
-            return roll > other.roll;
-        }
+        return roll > next_student.roll;
     }
 };
 
 int main()
 {
-    int N;
-    cin >> N;
+    int n;
+    cin >> n;
 
-    priority_queue<Student> maxHeap;
+    priority_queue<Student> pq;
 
-    for (int i = 0; i < N; ++i)
+    for(int i = 0; i < n; ++i)
     {
         Student student;
         cin >> student.name >> student.roll >> student.marks;
-        maxHeap.push(student);
+        pq.push(student);
     }
 
-    int Q;
-    cin >> Q;
+    int q;
+    cin >> q;
 
-    while (Q--)
+    while(q--)
     {
-        int command;
-        cin >> command;
+        int c;
+        cin >> c;
 
-        if (command == 0)
+        if(c == 0)
         {
             Student student;
             cin >> student.name >> student.roll >> student.marks;
-            maxHeap.push(student);
-            cout << maxHeap.top().name << " " << maxHeap.top().roll << " " << maxHeap.top().marks << endl;
+            pq.push(student);
+
+            cout << pq.top().name << " " << pq.top().roll << " " << pq.top().marks << endl;
         }
-        else if (command == 1)
+        else if(c == 1)
         {
-            if (maxHeap.empty())
+            if(!pq.empty())
             {
-                cout << "Empty" << endl;
+                cout << pq.top().name << " " << pq.top().roll << " " << pq.top().marks << endl;
             }
             else
             {
-                cout << maxHeap.top().name << " " << maxHeap.top().roll << " " << maxHeap.top().marks << endl;
-            }
-        }
-        else if (command == 2)
-        {
-            if (maxHeap.empty())
-            {
                 cout << "Empty" << endl;
             }
-            else
+        }
+        else if(c == 2)
+        {
+            if(!pq.empty())
             {
-                maxHeap.pop();
-                if (maxHeap.empty())
+                pq.pop();
+
+                if (!pq.empty())
                 {
-                    cout << "Empty" << endl;
+                    cout << pq.top().name << " " << pq.top().roll << " " << pq.top().marks << endl;
                 }
                 else
                 {
-                    cout << maxHeap.top().name << " " << maxHeap.top().roll << " " << maxHeap.top().marks << endl;
+                    cout << "Empty" << endl;
                 }
+            }
+            else
+            {
+                cout << "Empty" << endl;
             }
         }
     }

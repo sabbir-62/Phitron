@@ -1,32 +1,43 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-bool compare(const pair<string, int>& a, const pair<string, int>& b) {
-    if (a.second == b.second) {
-        return a.first < b.first;
-    }
-    return a.second > b.second;
-}
+int main()
+{
+    int t;
+    cin >> t;
+    cin.ignore();
 
-int main() {
-    string inputString;
-    cout << "Enter the string: ";
-    getline(cin, inputString);
+    while(t--)
+    {
+        string s;
+        getline(cin, s);
 
-    stringstream ss(inputString);
-    map<string, int> wordCount;
-    string word;
+        stringstream ss(s);
+        unordered_map<string, int> count;
+        string word;
 
-    while (ss >> word) {
-        wordCount[word]++;
-    }
+        while(ss >> word)
+        {
+            count[word]++;
+        }
 
-    vector<pair<string, int>> sortedWords(wordCount.begin(), wordCount.end());
-    sort(sortedWords.begin(), sortedWords.end(), compare);
+        int maxCount = 0;
+        string words;
 
-    cout << "Word Count:" << endl;
-    for (const auto& pair : sortedWords) {
-        cout << pair.first << ": " << pair.second << endl;
+        for(const auto& pair : count)
+        {
+            if(pair.second > maxCount)
+            {
+                maxCount = pair.second;
+                words = pair.first;
+            }
+            else if(pair.second == maxCount && pair.first < words)
+            {
+                words = pair.first;
+            }
+        }
+
+        cout << words << " " << maxCount << endl;
     }
 
     return 0;
