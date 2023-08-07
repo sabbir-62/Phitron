@@ -1,43 +1,41 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <sstream>
+#include <unordered_map>
 using namespace std;
 
-int main()
-{
-    int t;
-    cin >> t;
-    cin.ignore();
+int main() {
+    int test_cases;
+    cin >> test_cases;
+    cin.ignore(); // Ignore the remaining newline character after reading test_cases
 
-    while(t--)
-    {
+    for (int t = 0; t < test_cases; ++t) {
         string s;
         getline(cin, s);
 
+        // Convert the string to lowercase for case-insensitive comparison
+        for (char& c : s) {
+            c = tolower(c);
+        }
+
+        const char delimiter = ' ';
         stringstream ss(s);
-        unordered_map<string, int> count;
-        string word;
+        unordered_map<string, int> word_count;
 
-        while(ss >> word)
-        {
-            count[word]++;
+        while (getline(ss, s, delimiter)) {
+            word_count[s]++;
         }
 
-        int maxCount = 0;
-        string words;
+        int max_count = 0;
+        string max_word;
 
-        for(const auto& pair : count)
-        {
-            if(pair.second > maxCount)
-            {
-                maxCount = pair.second;
-                words = pair.first;
-            }
-            else if(pair.second == maxCount && pair.first < words)
-            {
-                words = pair.first;
+        for (const auto& entry : word_count) {
+            if (entry.second > max_count) {
+                max_count = entry.second;
+                max_word = entry.first;
             }
         }
 
-        cout << words << " " << maxCount << endl;
+        cout << max_word << " " << max_count << endl;
     }
 
     return 0;
